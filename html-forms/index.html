@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>HTML Forms</title>
+  </head>
+
+  <body>
+    <h1>Coding Form!</h1>
+
+    <form action="index.html" method="post">
+      <label for="emails">Email</label>
+      <div>
+        <input type="email" name="emails" id="emails" >
+      </div>
+
+      <div>
+        <label for="codingCool">Why is coding cool?</label>
+      </div>
+
+      <div>
+        <select name="codingCool" id="codingCool">
+          <option value="select">Select an option</option>
+          <option value="interesting">Because it's interesting</option>
+          <option value="fun">Because it's fun</option>
+          <option value="powerful">Because it's powerful</option>
+        </select>
+      </div>
+
+      <div>
+        <p>
+          <label for="language">Favourite Language (choose one)</label>
+        </p>
+      </div>
+      <div>
+        <p>
+          <input type="radio" name="language" id="languageHTML" value="HTML">HTML
+          <input type="radio" name="language" id="languageCSS" value="CSS">CSS
+          <input type="radio" name="language" id="languageJavascript" value="Javascript">Javascript
+        </p>
+      </div>
+
+      <div>
+        <p>
+          <label for="signUp">Would you like to sign up for more information?</label>
+        </p>
+        <input type="checkbox" name="signUp" id="signUp" value="signMeUp">Sign me up!
+      </div>
+
+      <div>
+        <label for="comments">Comments</label>
+      </div>
+      <div>
+        <textarea name="comments" id="commentsBox" cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <input type="submit" name="comments" id="comments" value="Submit">
+      </div>
+
+    </form>
+  </body>
+</html>

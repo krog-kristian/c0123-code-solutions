@@ -1,0 +1,13 @@
+body {
+  line-height: 1.6em;
+}
+
+body p {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+body
+h1,
+h2 {
+  font-family: 'Stick No Bills', sans-serif;
+}

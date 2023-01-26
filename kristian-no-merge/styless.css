@@ -1,0 +1,35 @@
+header {
+  background-color: black;
+  color: blueviolet;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h1 {
+  color: aliceblue;
+}
+
+button {
+  flex-direction: row-reverse;
+  border-radius: 20px;
+  border: solid black 0.01rem;
+}
+
+.btn-right {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 0;
+}
+
+p {
+  max-width: 50%;
+  text-align: center;
+}
+
+body {
+  background: linear-gradient(180deg, #a5a299, #e9ebf8);
+}

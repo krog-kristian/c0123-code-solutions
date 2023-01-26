@@ -7,6 +7,8 @@ header {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  max-width: 800px;
+  margin: auto;
 }
 
 h1 {
@@ -32,4 +34,28 @@ p {
 
 body {
   background: linear-gradient(180deg, #a5a299, #e9ebf8);
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+#nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-height: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+#ball {
+  background: black;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+}
+
+#intro {
+  margin-top: 10%;
 }

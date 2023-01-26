@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.row {
+  display: flex;
+  margin: 2px 0;
+}
+
+.col-full {
+  flex-basis: 100%;
+}
+
+.col-third {
+  flex-basis: calc(100% / 3);
+}
+
+.col-quart {
+  flex-basis: calc(100% / 4);
+}
+
+.col-two-third {
+  flex-basis: calc(100% * (2/3));
+}
+
+img {
+  width: 100%;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+p {
+  font-weight: 500;
+  line-height: 1.2rem;
+}

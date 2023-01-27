@@ -76,4 +76,6 @@ h2 {
 #learn-more {
   border: solid red 2px;
   padding: 0.25rem 1.5rem;
+  text-decoration: none;
+  color: red;
 }

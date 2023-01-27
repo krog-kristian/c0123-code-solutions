@@ -33,7 +33,7 @@ h2 {
 
 .space-between {
   justify-content: space-between;
-  margin: 0 4rem;
+  margin: 0 3rem;
 }
 
 header {
@@ -74,8 +74,15 @@ h2 {
 }
 
 #learn-more {
-  border: solid red 2px;
-  padding: 0.25rem 1.5rem;
+  border: solid #f34b3f 2px;
+  padding: 0.3rem 1.75rem;
   text-decoration: none;
-  color: red;
+  color: #f34b3f;
+  font-size: 0.8rem;
+}
+
+#learn-more:hover {
+  color: blue;
+  border: solid blue 3px;
+  transform: scale(1.1);
 }

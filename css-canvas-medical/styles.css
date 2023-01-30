@@ -24,6 +24,7 @@ main {
   background-color: white;
   border-bottom: solid #6e6e6e 1px;
   top: 0;
+  padding-bottom: 15px;
 }
 
 .margin-side-only {
@@ -99,10 +100,6 @@ header {
   flex-wrap: nowrap;
 }
 
-.dir-col {
-  flex-direction: column;
-}
-
 .text-cen {
   text-align: center;
 }
@@ -120,9 +117,12 @@ header {
   margin-bottom: 3rem;
 }
 
-.go-home > img {
+.go-home {
   width: 125px;
-  padding: 15px 0;
+}
+
+.go-home > img {
+  width: 100%;
 }
 
 .stick-right {

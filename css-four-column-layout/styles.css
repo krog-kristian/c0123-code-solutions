@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  width: 1024px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.phone-column {
+  flex-basis: 25%;
+}
+
+.phone-column > .phone-img {
+  width: 50%;
+}

@@ -1,0 +1,55 @@
+body {
+  background-color: #f7f8fa;
+}
+
+section {
+  font-family: Barlow, sans-serif;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  width: 80%;
+}
+
+.phone-column {
+  flex-basis: 25%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.large-img {
+  width: 100%;
+  margin: 0;
+}
+
+.small-img {
+  width: 25%;
+  padding: 0 75%;
+}
+
+.mini-header {
+  text-align: center;
+  font-weight: 700;
+}
+
+h3,
+p {
+  text-align: center;
+  width: 100%;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 0.8rem;
+}

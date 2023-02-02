@@ -123,7 +123,7 @@ header {
 }
 
 .pad-third {
-  padding: 0 33%;
+  padding: 0 30%;
 }
 
 .pad-quart {
@@ -150,17 +150,6 @@ header {
 
 .relative {
   position: relative;
-}
-
-.get-started {
-  background-color: #294464;
-  border: solid #294464 1px;
-  text-decoration: none;
-  color: white;
-  padding: 10px 35px;
-  border-radius: 5px;
-  font-family: Avenir, sans-serif;
-  font-size: 14pt;
 }
 
 #nav-contact-us {
@@ -302,5 +291,16 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 7.5%;
+  margin: 0 7.5%;
+}
+
+.get-started {
+  background-color: #294464;
+  border: solid #294464 1px;
+  text-decoration: none;
+  color: white;
+  padding: 10px 35px;
+  border-radius: 5px;
+  font-family: Avenir, sans-serif;
+  font-size: 14pt;
 }

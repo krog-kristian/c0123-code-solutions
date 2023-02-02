@@ -123,7 +123,7 @@ header {
 }
 
 .pad-third {
-  padding: 0 30%;
+  padding: 0 33%;
 }
 
 .pad-quart {
@@ -143,8 +143,10 @@ header {
 }
 
 .stick-right {
-  position: absolute;
-  right: 0;
+  justify-content: flex-end;
+}
+
+.self-centered {
   align-self: center;
 }
 

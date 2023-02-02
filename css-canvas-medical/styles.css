@@ -23,14 +23,14 @@
 }
 
 main {
-  margin-top: 100px !important;
+  margin-top: 150px !important;
 }
 
 .nav-follow {
   position: fixed;
   z-index: 2;
   background-color: white;
-  border-bottom: solid #6e6e6e 1px;
+  border-bottom: solid #bebebe 1px;
   top: 0;
 }
 
@@ -54,6 +54,16 @@ main {
   background-size: cover;
   position: relative;
   background-image: url("images/about-us/about-us-header.jpg");
+  background-position: center;
+  margin: auto;
+}
+
+#background-img-implementation {
+  width: 100%;
+  height: 600px;
+  background-size: cover;
+  position: relative;
+  background-image: url("images/implementation/implementation-header.jpg");
   background-position: center;
   margin: auto;
 }
@@ -128,6 +138,11 @@ header {
 
 .pad-quart {
   padding: 0 25%;
+}
+
+.top-bot-padding {
+  padding-top: 75px;
+  padding-bottom: 75px;
 }
 
 .light-back {
@@ -218,6 +233,11 @@ header {
   margin: 0;
 }
 
+p {
+  margin: 0.5rem auto;
+  font-size: 1.1rem;
+}
+
 h2,
 h3 {
   font-family: "Tiempos Headline", serif;
@@ -237,6 +257,10 @@ h4 {
   margin: 0 1rem 0 0;
 }
 
+li > p {
+  margin: 2.5rem auto;
+}
+
 .image-overlay > p {
   font-size: 1.2rem;
   margin: 3rem 0;
@@ -244,9 +268,10 @@ h4 {
 }
 
 h3 {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: normal;
   width: 100%;
+  margin: 2rem auto;
 }
 
 .locations-left {
@@ -281,7 +306,8 @@ a:hover {
 }
 
 .team-member {
-  width: 100%;
+  width: 50%;
+  margin-top: 2rem;
 }
 
 .team-member > img {
@@ -293,7 +319,6 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 7.5%;
 }
 
 .get-started {
@@ -305,4 +330,25 @@ a:hover {
   border-radius: 5px;
   font-family: Avenir, sans-serif;
   font-size: 14pt;
+}
+
+ol {
+  list-style-position: inside;
+}
+
+li::marker {
+  font-size: 3rem;
+}
+
+li {
+  font-size: 1.8rem;
+  margin: 2rem auto;
+}
+
+.larger-title {
+  font-size: 2.5rem;
+}
+
+footer {
+  border-top: solid #bebebe 1px;
 }

@@ -1,23 +1,19 @@
 /* exported chunk */
 /*
-function chunk(array, size) {
-  var newArray = [];
-  var chunk = [];
-  for (var i = 0; i < array.length; i + size) {
-    for (var k = 0; k < size; k++) {
-      var a = array[i + k];
-      if (a === undefined) {
-        newArray.push(chunk);
-        return newArray;
-      } else {
-        chunk[k] = a;
-      }
-    }
-    newArray.push(chunk);
-    chunk = [];
-  }
-  return newArray;
-}
+define a function named chunk with two parameters array and size
+crete a variable newArray assigned an array literal
+create a new variable named chunk and assign it array literal
+do a for loop from index 0 to the length of the array
+an if statement checking if the current iteration plus one is divisible by size
+if true push array at current index into chunk
+push the chunk into newArray
+reassign chunk to array literal
+else
+push array at current index into chunk
+after the loop if chunk is equal to an empty array
+return newArray
+if not push the chunk into newArray
+return newArray
 */
 
 function chunk(array, size) {
@@ -32,6 +28,9 @@ function chunk(array, size) {
       chunk.push(array[i]);
     }
   }
-  newArray.push(chunk); // appears that when the chunk does not hit full size on last iterations it is not pushed?
+  if (chunk.length === 0) {
+    return newArray;
+  }
+  newArray.push(chunk);
   return newArray;
 }

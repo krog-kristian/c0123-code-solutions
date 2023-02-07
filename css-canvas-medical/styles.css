@@ -43,9 +43,16 @@ main {
   height: 600px;
   background-size: cover;
   position: relative;
-  background-image: url("images/hero.jpg");
   background-position: center;
   margin: auto;
+}
+
+#front-page {
+  background-image: url("images/hero.jpg");
+}
+
+#product-main-img {
+  background-image: url("images/product/product-header.jpg");
 }
 
 #background-img-about {

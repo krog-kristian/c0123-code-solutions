@@ -46,3 +46,7 @@ div:first-child > img {
 div:last-child > img {
   transform: rotate(30deg);
 }
+
+/*
+.pokeball-wrapper:first-child > img.pokeball
+*/

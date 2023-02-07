@@ -1,7 +1,9 @@
 /* exported defaults */
 
-function defaults(source, target) {
-  var cheater = target;
-  Object.assign(source, target);
-  Object.assign(cheater, target);
+function defaults(target, source) {
+  for (const key in source) {
+    if (!Object.hasOwn(target, key)) {
+      target[key] = source[key];
+    }
+  }
 }

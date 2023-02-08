@@ -54,6 +54,8 @@ function playAgain(event) {
   }
   $listOfSpans[count].id = '';
   count = 0;
+  accuracy = 0;
+  accuracyCount = $listOfSpans.length;
   $fullscreen.id = 'hidden';
   $listOfSpans[count].id = 'underlined';
 }

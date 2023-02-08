@@ -9,18 +9,15 @@ function titleCase(string) {
   for (var i = 0; i < stringArray.length; i++) {
     if (stringArray[i][stringArray[i].length - 1] === ':') {
       var length = stringArray[i].length - 1;
-      // console.log('length:', length);
       stringArray[i] = stringArray[i].slice(0, length);
-      // console.log('cutting off colon:', stringArray[i]);
       lowercased = stringArray[i + 1].toLowerCase();
       capital = stringArray[i + 1][0].toUpperCase();
       stringArray[i + 1] = ':' + capital + (lowercased.slice(1));
     }
     if (stringArray[i].includes('-')) {
-      var hyphen = string[i].split('-');
-      // console.log(hyphen);
-      hyphen[0] = (hyphen[0][0].toUpperCase) + (hyphen[0].slice(1));
-      hyphen[1] = (hyphen[1][0].toUpperCase) + (hyphen[1].slice(1));
+      var hyphen = stringArray[i].split('-');
+      hyphen[0] = hyphen[0][0].toUpperCase() + (hyphen[0].slice(1));
+      hyphen[1] = hyphen[1][0].toUpperCase() + (hyphen[1].slice(1));
       stringArray[i] = hyphen[0] + '-' + hyphen[1];
     }
     switch (stringArray[i]) {
@@ -85,6 +82,11 @@ function titleCase(string) {
     }
   }
   newString = newString.replaceAll(' :', ': ');
-  newString[0] = newString[0].toUpperCase();
-  return newString.trim(); // this trims off the white space
+  var capFirst = newString.slice(0, 1);
+  capFirst = capFirst.toUpperCase();
+  var title = newString.slice(1);
+  newString = capFirst + title;
+  return newString.trim();
 }
+/* better way to do this would be a loop for the switch statement and the exceptions
+in an array and compare each time */

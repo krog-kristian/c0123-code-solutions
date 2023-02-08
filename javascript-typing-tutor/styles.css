@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.text-test {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 4rem;
+  display: flex;
+  align-items: center;
+}
+
+.green-text {
+  color: chartreuse;
+}
+
+.red-text {
+  color: red;
+}
+
+#underlined {
+  box-shadow: 0 5px black;
+}
+
+.fullscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #000b;
+}
+
+.pop-up {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 30%;
+  height: auto;
+  border: solid 2px black;
+  padding: 3rem 2rem;
+  background-color: white;
+}
+
+.full-row {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+#no-btn {
+  background-color: #eb4511;
+  color: white;
+  font-size: 2rem;
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem 2rem;
+  box-shadow: 4px 2px black;
+  margin: auto;
+}
+
+#yes-btn {
+  background-color: darkgreen;
+  color: white;
+  font-size: 2rem;
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem 2rem;
+  box-shadow: 4px 2px black;
+  margin: auto;
+}
+
+#hidden {
+  display: none;
+}
+
+button:active {
+  transform: scale(1.1);
+}
+
+button:hover {
+  cursor: pointer;
+}

@@ -1,26 +1,4 @@
 console.log('Lodash is loaded:', typeof _ !== 'undefined');
-/*
-var players = [
-  {
-    name: 'Cody',
-    hand: []
-  },
-  {
-    name: 'Rex',
-    hand: []
-  },
-  {
-    name: 'Anakin',
-    hand: []
-  },
-  {
-    name: 'Kenobi',
-    hand: []
-  }
-];
-
-console.log(players);
-*/
 var players = [];
 
 function newGame(names) {
@@ -64,13 +42,11 @@ function deckBuilder() {
     }
   }
   deck = _.shuffle(deck);
-  console.log('deck ready', deck);
+  console.log('Deck Ready');
   dealer(players);
 }
 
 var deck = [];
-
-// deckBuilder();
 
 function dealer(currentPlayers) {
   for (var k = 0; k < 2; k++) {
@@ -79,11 +55,9 @@ function dealer(currentPlayers) {
       currentPlayers[i].hand.push(deck.pop());
     }
   }
-  console.log('cards dealt');
+  console.log('Cards Dealt.');
   checkWinner();
 }
-
-// dealer();
 
 var scores = [];
 var oneScore = 0;
@@ -113,11 +87,8 @@ function checkWinner() {
     for (var k = 0; k < winner.length; k++) {
       tieBreaker.push(winner[k].name);
     }
-    console.log('TIE breaker players:', tieBreaker);
+    console.log('Tie breaker players:', tieBreaker);
     return newGame(tieBreaker);
-    /* for (var k = 0; k < winner.length; k++) {
-      console.log('TIE', winner[k].name);
-    } */
   } else {
     console.log('The winner is:', winner[0].name, winner[0].hand);
   }
@@ -126,4 +97,3 @@ function checkWinner() {
   topScore = 0;
   winner = [];
 }
-// tie breaker appears to work! Next steps cleann this up, keep some console logs and add an play again option?

@@ -1,4 +1,4 @@
-var imageLinks = ['images/001.png', 'images/004.png', 'images/007.png', 'images/025.png', 'images/039.png'];
+var imageLinks = ['images/001.png', 'images/004.png', 'images/007.png', 'images/025.png', 'images/039.png', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png'];
 var $img = document.querySelector('img');
 var $selectors = document.querySelectorAll('#selector i');
 var $selector = document.querySelector('#selector');
@@ -9,6 +9,23 @@ var currentImg = 1;
 var nInterval = null;
 
 $selector.addEventListener('click', choose);
+
+window.addEventListener('DOMContentLoaded', function () {
+  var $defaultIconDiv = document.createElement('div');
+  var $defaultIcon = document.createElement('i');
+  $defaultIcon.setAttribute('class', 'fa-sharp fa-regular fa-circle-dot');
+  $defaultIconDiv.appendChild($defaultIcon);
+  $selector.appendChild($defaultIconDiv);
+  for (var i = 0; i < imageLinks.length - 1; i++) {
+    var $iconDiv = document.createElement('div');
+    var $icon = document.createElement('i');
+    $icon.setAttribute('class', 'fa-sharp fa-solid fa-circle-dot');
+    $iconDiv.appendChild($icon);
+    $selector.appendChild($icon);
+  }
+  $selectors = document.querySelectorAll('#selector i');
+}
+);
 
 function choose(event) {
   for (var i = 0; i < $selectors.length; i++) {
@@ -28,7 +45,7 @@ function choose(event) {
 $leftSelect.addEventListener('click', function () {
   if (currentImg === 1) {
     previousImg = currentImg;
-    currentImg = 5;
+    currentImg = imageLinks.length;
     switchItem();
   } else {
     previousImg = currentImg;
@@ -42,7 +59,7 @@ $leftSelect.addEventListener('click', function () {
 $rightSelect.addEventListener('click', nextImage);
 
 function nextImage() {
-  if (currentImg === 5) {
+  if (currentImg === imageLinks.length) {
     previousImg = currentImg;
     currentImg = 1;
     switchItem();

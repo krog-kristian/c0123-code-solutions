@@ -1,23 +1,19 @@
 var $title = document.querySelector('.countdown-display');
+var countdown = Number($title.textContent);
 
-function changeTitle(title1, title2, title3, title4) {
-  if ($title.textContent === '4') {
-    $title.textContent = title1;
-  } else if ($title.textContent === title1) {
-    $title.textContent = title2;
-  } else if ($title.textContent === title2) {
-    $title.textContent = title3;
-  } else if ($title.textContent === title3) {
-    $title.textContent = title4;
+function changeTitle() {
+  if (countdown === 0) {
+    $title.textContent = '~Earth Beeeelooowww Us~';
     clearInterval(interval);
-    interval = null;
+    interval = false;
+  } else {
+    $title.textContent = countdown;
+    countdown--;
   }
 }
 
-var interval;
+var interval = true;
 
-window.addEventListener('DOMContentLoaded', function () {
-  if (!interval) {
-    interval = setInterval(changeTitle, 1000, '3', '2', '1', '~Earth Beeeelooowww Us~');
-  }
-});
+if (interval) {
+  setInterval(changeTitle, 1000);
+}

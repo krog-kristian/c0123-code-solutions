@@ -1,0 +1,30 @@
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.fa-circle-dot {
+  font-size: 2rem;
+  padding: 1rem;
+  margin: 0 1rem;
+}
+
+.fa-chevron-right,
+.fa-chevron-left {
+  font-size: 2rem;
+  padding: 0.5rem;
+}
+
+.img-box > img {
+  width: 100%;
+}
+
+i:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}

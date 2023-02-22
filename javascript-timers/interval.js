@@ -15,5 +15,5 @@ function changeTitle() {
 var interval = true;
 
 if (interval) {
-  setInterval(changeTitle, 1000);
+  interval = setInterval(changeTitle, 1000);
 }

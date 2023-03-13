@@ -30,7 +30,7 @@ const flash = {
   laughingUrl: 'images/flash-laugh.gif',
   laugh: function () {
     setTimeout(() => {
-      $flashImage.setAttribute('src', flash.laughingUrl);
+      $flashImage.setAttribute('src', this.laughingUrl);
     }, 3000);
   }
 };

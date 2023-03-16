@@ -17,20 +17,19 @@ const traits = [
   { trainer: 'ash' }
 ];
 
-const initialValue = 0;
-
 const sum = numbers.reduce(
-  (bleh, blank) => bleh + blank, initialValue
+  (bleh, blank) => bleh + blank
 );
 console.log('Sum of numbers:', sum);
 
 const initialProduct = 1;
 const product = numbers.reduce(
-  (accumalted, num2) => accumalted * num2, initialProduct
+  (accumalted, num2) => accumalted * num2
 );
 
 console.log('Product of numbers:', product);
 
+const initialValue = 0;
 const balance = account.reduce(
   (accumalted, num2) => {
     if (num2.type === 'deposit') {

@@ -43,10 +43,8 @@ const balance = account.reduce(
 
 console.log('Account balance:', balance);
 
-const initialObject = {};
-
 const composite = traits.reduce((addTraits, nextTrait) =>
-  Object.assign(addTraits, nextTrait), initialObject
+  Object.assign(addTraits, nextTrait)
 );
 
 console.log('An object from an array of properties:', composite);

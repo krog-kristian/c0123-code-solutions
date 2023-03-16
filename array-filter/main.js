@@ -22,13 +22,7 @@ const startWithE = names.filter((name) => name[0] === 'E');
 console.log('Names that start with E:', startWithE);
 
 const haveD = names.filter((name) => {
-  let trueOrNot = false;
-  for (let i = 0; i < name.length; i++) {
-    if (name[i].toLowerCase() === 'd') {
-      trueOrNot = true;
-    }
-  }
-  return trueOrNot;
+  return name.toLowerCase().includes('d');
 });
 
 console.log('Have the letter d:', haveD);

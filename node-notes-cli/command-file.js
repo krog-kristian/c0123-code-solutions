@@ -41,8 +41,7 @@ try {
 async function read() {
   try {
     const theObject = await fs.readFile('data.json', 'utf8');
-    const parsedObject = JSON.parse(theObject);
-    return parsedObject;
+    return JSON.parse(theObject);
   } catch (err) {
     console.error('Could not read file:', err);
   }
@@ -116,6 +115,7 @@ async function update(noteID, newNote) {
     console.error('Update failed:', err);
   }
 }
+
 /**
  * Deletes the users chosen note.
  * @param noteID to be deleted

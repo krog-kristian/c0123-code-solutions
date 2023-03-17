@@ -57,7 +57,6 @@ async function readAndReport() {
     for (const [key, value] of Object.entries(theObject.notes)) {
       console.log(`${key}: ${value}`);
     }
-    return theObject;
   } catch (err) {
     console.error('Read and report file failed:', err);
   }
@@ -77,8 +76,7 @@ async function create(newNote) {
     const currentID = objectParsed.nextId;
     objectParsed.notes[currentID] = newNote;
     objectParsed.nextId++;
-    const newFile = await writeToFile(objectParsed);
-    return newFile;
+    await writeToFile(objectParsed);
   } catch (err) {
     console.error('Could not create a new note:', err);
   }
@@ -91,8 +89,7 @@ async function create(newNote) {
 async function writeToFile(content) {
   try {
     const newJSON = JSON.stringify(content, null, 2);
-    const writtenFile = fs.writeFile('data.json', newJSON);
-    return writtenFile;
+    fs.writeFile('data.json', newJSON);
   } catch (err) {
     console.error('File failed to write:', err);
   }
@@ -114,8 +111,7 @@ async function update(noteID, newNote) {
       process.exit(1);
     }
     objectParsed.notes[noteID] = newNote;
-    const newFile = await writeToFile(objectParsed);
-    return newFile;
+    await writeToFile(objectParsed);
   } catch (err) {
     console.error('Update failed:', err);
   }
@@ -132,8 +128,7 @@ async function deleteEntry(noteID) {
       process.exit(1);
     }
     delete objectParsed.notes[noteID];
-    const newFile = await writeToFile(objectParsed);
-    return newFile;
+    await writeToFile(objectParsed);
   } catch (err) {
     console.error('Could not delete note:', err);
   }

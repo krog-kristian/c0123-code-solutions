@@ -11,109 +11,130 @@ if (process.argv.length > 5) {
 /**
  * CLI input to read, add, update and delete notes from a JSON file.
  */
-switch (command) {
-  case 'read':
-    read();
-    break;
-  case 'create':
-    create();
-    break;
-  case 'update':
-    update();
-    break;
-  case 'delete':
-    deleteEntry();
-    break;
-  default:
-    console.error('Improper command given');
-    process.exit(1);
+try {
+  switch (command) {
+    case 'read':
+      await readAndReport();
+      break;
+    case 'create':
+      await create(input1);
+      break;
+    case 'update':
+      await update(input1, input2);
+      break;
+    case 'delete':
+      await deleteEntry(input1);
+      break;
+    default:
+      console.error('Improper command given');
+      process.exit(1);
+  }
+} catch (err) {
+  console.error('Command failed to execute:', err);
+  process.exit(1);
 }
 
 /**
- * The read function is the first step for all other functions but
- * if called to only read will log the contents of the notes.
- * @returns The parsed JSON Object to be used by other functions
+ * Reads and parses a JSON file.
+ * @returns An object
  */
 async function read() {
   try {
     const theObject = await fs.readFile('data.json', 'utf8');
     const parsedObject = JSON.parse(theObject);
-    if (command === 'read') {
-      for (const [key, value] of Object.entries(parsedObject.notes)) {
-        console.log(`${key}: ${value}`);
-      }
-    }
     return parsedObject;
   } catch (err) {
-    console.error('An error occured:', err);
+    console.error('Could not read file:', err);
   }
 }
-/**
- * The create function takes the read JSON file and adds a new entry to notes
- * and updates the nextID property of dat.json and rewrites the file.
- * Added bug fix to make sure user inputs a new note when using create command.
- * @returns returns new data.json text
- */
 
-async function create() {
+/**
+ * Logs an objects notes.
+ */
+async function readAndReport() {
   try {
-    if (!input1) {
+    const theObject = await read();
+    for (const [key, value] of Object.entries(theObject.notes)) {
+      console.log(`${key}: ${value}`);
+    }
+    return theObject;
+  } catch (err) {
+    console.error('Read and report file failed:', err);
+  }
+}
+
+/**
+ * Creates a new notes entry in the object and writes the data.json file.
+ * @param A new note to be added.
+ */
+async function create(newNote) {
+  try {
+    if (!newNote) {
       console.error('This command requires an additional argument to create a note.');
       process.exit(1);
     }
     const objectParsed = await read();
     const currentID = objectParsed.nextId;
-    objectParsed.notes[currentID] = input1;
+    objectParsed.notes[currentID] = newNote;
     objectParsed.nextId++;
-    const newFile = await fs.writeFile('data.json', JSON.stringify(objectParsed, null, 2));
+    const newFile = await writeToFile(objectParsed);
     return newFile;
   } catch (err) {
-    console.error('Something went wrong', err);
+    console.error('Could not create a new note:', err);
   }
 }
+
 /**
- * The update function takes the read data.json and updates the users chosen note
- * then rewrites the file. Added conditional to make sure entry number exists.
- * Removed bug that would delete the note if no update argument was passed.
- * @returns updated data.json text
+ * Converts an object to JSON and writes it to data.json.
+ * @param object to be converted to JSON
  */
-async function update() {
+async function writeToFile(content) {
   try {
-    if (!input2) {
+    const newJSON = JSON.stringify(content, null, 2);
+    const writtenFile = fs.writeFile('data.json', newJSON);
+    return writtenFile;
+  } catch (err) {
+    console.error('File failed to write:', err);
+  }
+}
+
+/**
+ * Updates the users chosen note.
+ * @param noteID to be replaced by newNote made by user
+ */
+async function update(noteID, newNote) {
+  try {
+    if (!newNote) {
       console.error('This command requires an additional argument to update the note.');
       process.exit(1);
     }
     const objectParsed = await read();
-    if (!Object.keys(objectParsed.notes).includes(input1)) {
-      console.error('Not a entry number:', input1);
+    if (!Object.keys(objectParsed.notes).includes(noteID)) {
+      console.error('Not a entry number:', noteID);
       process.exit(1);
     }
-    const currentID = input1;
-    objectParsed.notes[currentID] = input2;
-    const newFile = await fs.writeFile('data.json', JSON.stringify(objectParsed, null, 2));
+    objectParsed.notes[noteID] = newNote;
+    const newFile = await writeToFile(objectParsed);
     return newFile;
   } catch (err) {
-    console.error('Something went wrong', err);
+    console.error('Update failed:', err);
   }
 }
 /**
- * The deleteEntry function takes the users designated note to be deleted and
- * removes it from the object then rewrites the data.json file. Added conditional
- * to make sure entry number exists.
- * @returns updated data.json text
+ * Deletes the users chosen note.
+ * @param noteID to be deleted
  */
-async function deleteEntry() {
+async function deleteEntry(noteID) {
   try {
     const objectParsed = await read();
-    if (!Object.keys(objectParsed.notes).includes(input1)) {
-      console.error('Not a entry number:', input1);
+    if (!Object.keys(objectParsed.notes).includes(noteID)) {
+      console.error('Not a entry number:', noteID);
       process.exit(1);
     }
-    const currentID = input1;
-    delete objectParsed.notes[currentID];
-    const newFile = await fs.writeFile('data.json', JSON.stringify(objectParsed, null, 2));
+    delete objectParsed.notes[noteID];
+    const newFile = await writeToFile(objectParsed);
     return newFile;
   } catch (err) {
-    console.error('Something went wrong', err);
+    console.error('Could not delete note:', err);
   }
 }

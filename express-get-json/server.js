@@ -37,6 +37,10 @@ const sendBack = (res, info) => {
 
 app.get('/api/grades', getGrades);
 
+app.get('/', (req, res) => {
+  res.send('Nothing here try at /api/grades');
+});
+
 app.listen(8080, () => {
   console.log('Server start: port 8080.');
 });

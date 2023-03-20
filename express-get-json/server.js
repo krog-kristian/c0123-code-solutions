@@ -28,14 +28,16 @@ const getGrades = (req, res, next) => {
   for (const key in grades) {
     json.push(grades[key]);
   }
-  next(sendBack(res, json));
+  res.locals.json = json;
+  next();
 };
 
-const sendBack = (res, info) => {
-  res.json(info);
+const sendBack = (req, res) => {
+  res.json(res.locals.json);
 };
 
 app.get('/api/grades', getGrades);
+app.get('/api/grades', sendBack);
 
 app.get('/', (req, res) => {
   res.send('Nothing here try at /api/grades');

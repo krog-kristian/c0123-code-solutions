@@ -7,6 +7,8 @@ let nextId = 1;
 
 const grades = {};
 
+app.use(jsonParser);
+
 app.get('/api/grades', (req, res) => {
   const json = [];
   for (const key in grades) {
@@ -14,8 +16,6 @@ app.get('/api/grades', (req, res) => {
   }
   res.json(json);
 });
-
-app.use(jsonParser);
 
 app.post('/api/grades', (req, res) => {
   const newEntry = req.body;

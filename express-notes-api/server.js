@@ -1,45 +1,46 @@
-// import express from 'express';
-// import * as fs from 'node:fs/promises';
+import express from 'express';
+import * as fs from 'node:fs/promises';
 
-// const app = express();
-// const jsonParser = express.json();
+const app = express();
+const jsonParser = express.json();
 
-// app.use(jsonParser);
+app.use(jsonParser);
 
-// app.get('/api/notes', async (req, res) => {
-//   const theObject = await read();
-//   const notesList = [];
-//   for (const [, value] of Object.entries(theObject.notes)) {
-//     notesList.push(value);
-//   }
-//   res.json(notesList);
-// });
-// app.get('/api/notes/:id', async (req, res) => {
-//   const theObject = await read();
-//   for (const [key, value] of Object.entries(theObject.notes)) {
-//     if (req.params.id === key) {
-//       console.log('Found note.');
-//       res.json(value);
-//     } else if (!Number(req.params.id)) {
-//       res.status(400).send({ error: 'id must be a positive integer.' });
-//     } else {
-//       res.status(400).send('Id not found.');
-//     }
-//   }
-// });
+app.get('/api/notes', async (req, res) => {
+  const theObject = await read();
+  const notesList = [];
+  for (const [, value] of Object.entries(theObject.notes)) {
+    notesList.push(value);
+  }
+  res.json(notesList);
+});
+app.get('/api/notes/:id', async (req, res) => {
+  const theObject = await read();
+  if (!Number(req.params.id)) {
+    res.status(400).send({ error: 'id must be a positive integer.' });
+    return;
+  }
+  for (const [key, value] of Object.entries(theObject.notes)) {
+    if (req.params.id === key) {
+      res.json(value);
+      return;
+    }
+  }
+  res.status(400).send('Id not found.');
+});
 
-// /**
-//  * Reads and parses a JSON file.
-//  * @returns An object
-//  */
-// async function read() {
-//   try {
-//     const theObject = await fs.readFile('data.json', 'utf8');
-//     return JSON.parse(theObject);
-//   } catch (err) {
-//     console.error('Could not read file:', err);
-//   }
-// }
+/**
+ * Reads and parses a JSON file.
+ * @returns An object
+ */
+async function read() {
+  try {
+    const theObject = await fs.readFile('data.json', 'utf8');
+    return JSON.parse(theObject);
+  } catch (err) {
+    console.error('Could not read file:', err);
+  }
+}
 
 // /**
 //  * Creates a new notes entry in the object and writes the data.json file.
@@ -114,6 +115,6 @@
 //   }
 // }
 
-// app.listen(8080, () => {
-//   console.log('Express is listening on 8080.');
-// });
+app.listen(8080, () => {
+  console.log('Express is listening on 8080.');
+});

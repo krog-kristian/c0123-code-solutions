@@ -6,6 +6,9 @@ const jsonParser = express.json();
 
 app.use(jsonParser);
 
+/**
+ * Confirms whether the ID requested is a number.
+ */
 app.use('/api/notes/:id', (req, res, next) => {
   if (!Number(req.params.id)) {
     res.status(400).send({ error: `id ${req.params.id} must be a positive integer.` });
@@ -14,40 +17,61 @@ app.use('/api/notes/:id', (req, res, next) => {
   }
 });
 
+/**
+ * Retrieves all the notes and returns them to the client.
+ */
 app.get('/api/notes', async (req, res) => {
-  const theObject = await read();
-  const notesList = [];
-  for (const [, value] of Object.entries(theObject.notes)) {
-    notesList.push(value);
-  }
-  res.json(notesList);
-});
-
-app.get('/api/notes/:id', async (req, res) => {
-  const theObject = await read();
-  for (const [key, value] of Object.entries(theObject.notes)) {
-    if (req.params.id === key) {
-      res.json(value);
-      return;
+  try {
+    const theObject = await read();
+    const notesList = [];
+    for (const [, value] of Object.entries(theObject.notes)) {
+      notesList.push(value);
     }
+    res.json(notesList);
+  } catch (err) {
+    res.sendStatus(500);
+    console.error('Could not read file:', err);
   }
-  res.status(400).send(`Id ${req.params.id} not found.`);
 });
 
+/**
+ * Reteives a single note by ID
+ */
+app.get('/api/notes/:id', async (req, res) => {
+  try {
+    const theObject = await read();
+    if (theObject.notes[req.params.id]) {
+      res.json(theObject.notes[req.params.id]);
+      return;
+    } else {
+      res.status(400).send(`Id ${req.params.id} not found.`);
+    }
+  } catch (err) {
+    res.sendStatus(500);
+    console.error('Could not read file:', err);
+  }
+});
+
+/**
+ * Creates a new note if content is present.
+ */
 app.post('/api/notes', async (req, res) => {
-  if (req.body.content) {
-    try {
+  try {
+    if (req.body.content) {
       const newNote = await create(req.body);
       res.status(201).json(newNote);
-    } catch (err) {
-      console.error('Error occured writing to data.json:', err);
-      res.status(500).send('Something went wrong.');
+    } else {
+      res.status(400).send('Please include content to record as a note.');
     }
-  } else {
-    res.status(400).send('Please include content to record as a note.');
+  } catch (err) {
+    console.error('Error occured writing to data.json:', err);
+    res.status(500).send('Something went wrong.');
   }
 });
 
+/**
+ * Deletes a note if the ID exists
+ */
 app.delete('/api/notes/:id', async (req, res) => {
   try {
     const response = await deleteEntry(req.params.id);
@@ -62,17 +86,20 @@ app.delete('/api/notes/:id', async (req, res) => {
   }
 });
 
+/**
+ * Updates a note if their is content and the note ID exists.
+ */
 app.put('/api/notes/:id', async (req, res) => {
-  if (req.body.content) {
-    try {
+  try {
+    if (req.body.content) {
       const response = await update(req.params.id, req.body.content);
       res.status(200).json(response);
-    } catch (err) {
-      console.error('Theres has been an error updating:', err);
-      res.sendStatus(500);
+    } else {
+      res.status(400).send('Please include content to record as a note.');
     }
-  } else {
-    res.status(400).send('Please include content to record as a note.');
+  } catch (err) {
+    console.error('Theres has been an error updating:', err);
+    res.sendStatus(500);
   }
 });
 
@@ -81,12 +108,8 @@ app.put('/api/notes/:id', async (req, res) => {
  * @returns An object
  */
 async function read() {
-  try {
-    const theObject = await fs.readFile('data.json', 'utf8');
-    return JSON.parse(theObject);
-  } catch (err) {
-    console.error('Could not read file:', err);
-  }
+  const theObject = await fs.readFile('data.json', 'utf8');
+  return JSON.parse(theObject);
 }
 
 /**

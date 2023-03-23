@@ -98,8 +98,13 @@ app.put('/api/notes/:id', async (req, res) => {
       res.status(400).send('Please include content to record as a note.');
     }
   } catch (err) {
-    console.error('Theres has been an error updating:', err);
-    res.sendStatus(500);
+    if (err.cause === 'id') {
+      console.error(err);
+      res.status(404).send(err.message);
+    } else {
+      console.error('Theres has been an error updating:', err);
+      res.sendStatus(500);
+    }
   }
 });
 
@@ -143,9 +148,12 @@ async function writeToFile(content) {
  */
 async function update(noteID, newNote) {
   const objectParsed = await read();
-  objectParsed.notes[noteID].content = newNote;
-  await writeToFile(objectParsed);
-  return objectParsed.notes[noteID];
+  if (!Object.keys(objectParsed.notes).includes(noteID)) {
+    throw new Error('Id does not exist.', { cause: 'id' });
+  } else {
+    objectParsed.notes[noteID].content = newNote;
+    await writeToFile(objectParsed);
+  }
 }
 
 /**

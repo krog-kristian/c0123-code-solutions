@@ -4,6 +4,9 @@ import pg from 'pg';
 const app = express();
 const jsonParser = express.json();
 
+/**
+ * Creates the object to query the database.
+ */
 const db = new pg.Pool({
   connectionString: 'postgres://dev:dev@localhost/studentGradeTable',
   ssl: {
@@ -11,8 +14,14 @@ const db = new pg.Pool({
   }
 });
 
+/**
+ * Parses Incoming JSON
+ */
 app.use(jsonParser);
 
+/**
+ * Checks for legal grade IDs
+ */
 app.use('/api/grades/:gradeId', (req, res, next) => {
   if (!Number(req.params.gradeId) || Number(req.params.gradeId) <= 0) {
     res.status(400).send({ error: `id '${req.params.gradeId}' must be a positive integer.` });
@@ -21,21 +30,26 @@ app.use('/api/grades/:gradeId', (req, res, next) => {
   }
 });
 
-app.get('/api/grades', async (req, res) => {
+/**
+ * Retrives the grades table and sends to the user
+ */
+app.get('/api/grades', async (req, res, next) => {
   try {
     const sql = `
   select *
   from "grades"
   `;
     const data = await db.query(sql);
-    res.json(data.rows);
+    res.status(200).json(data.rows);
   } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+    next(err);
   }
 });
 
-app.get('/api/grades/:gradeId', async (req, res) => {
+/**
+ * Retrives a single grade ID and send back to the user or error if not found.
+ */
+app.get('/api/grades/:gradeId', async (req, res, next) => {
   try {
     const entry = [req.params.gradeId];
     const sql = `
@@ -50,21 +64,16 @@ app.get('/api/grades/:gradeId', async (req, res) => {
       res.status(404).json({ error: 'ID not found' });
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Whoops somethings not right...');
+    next(err);
   }
 });
 
-app.post('/api/grades', async (req, res) => {
+/**
+ * Creates a new grade entyr on the database.
+ */
+app.post('/api/grades', async (req, res, next) => {
   try {
-    if (!req.body.name && !req.body.course && !req.body.score) {
-      res.status(400).send('Please supply a grade, course and score');
-      return;
-    }
-    if (Number(req.body.score) > 100 || Number(req.body.score) < 0 || isNaN(req.body.score)) {
-      res.status(400).send('Score must be between 0-100');
-      return;
-    }
+    checkContent(req.body);
     const sql = `
     insert into "grades" ("name", "course", "score")
     values ($1, $2, $3)
@@ -74,21 +83,16 @@ app.post('/api/grades', async (req, res) => {
     const data = await db.query(sql, entry);
     res.status(201).json(data.rows[0]);
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Whoops somethings not right...');
+    next(err);
   }
 });
 
-app.put('/api/grades/:gradeId', async (req, res) => {
+/**
+ * Updates a grade on the database.
+ */
+app.put('/api/grades/:gradeId', async (req, res, next) => {
   try {
-    if (!req.body.name && !req.body.course && !req.body.score) {
-      res.status(400).send('Please supply a grade, course and score');
-      return;
-    }
-    if (Number(req.body.score) > 100 || Number(req.body.score) < 0 || isNaN(req.body.score)) {
-      res.status(400).send('Score must be between a number 0-100');
-      return;
-    }
+    checkContent(req.body);
     const entry = [req.body.name, req.body.course, req.body.score, req.params.gradeId];
     const sql = `
     update "grades"
@@ -100,42 +104,65 @@ app.put('/api/grades/:gradeId', async (req, res) => {
     `;
     const data = await db.query(sql, entry);
     if (data.rows[0]) {
-      res.status(202).json(data.rows[0]);
-      console.log(data);
+      res.status(200).json(data.rows[0]);
     } else {
       res.status(404).json({ error: 'ID not found' });
-      console.log(data);
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Whoops somethings not right...');
+    next(err);
   }
 });
 
-// app.delete('/api/grades/:gradeId', async (req, res) => {
-//   try {
-//     const entry =
-//     const sql = `
-//     update "grades"
-//     set "name" = $1,
-//         "course" = $2,
-//         "score" = $3
-//     where "gradeId" = $4
-//     returning *
-//     `;
-//     const data = await db.query(sql, entry);
-//     if (data.rows[0]) {
-//       res.status(202).json(data.rows[0]);
-//       console.log(data);
-//     } else {
-//       res.status(404).json({ error: 'ID not found' });
-//       console.log(data);
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Whoops somethings not right...');
-//   }
-// });
+/**
+ * Deletes a single gradeID from the database.
+ */
+app.delete('/api/grades/:gradeId', async (req, res, next) => {
+  try {
+    const entry = [req.params.gradeId];
+    const sql = `
+    delete
+    from "grades"
+    where "gradeId" = $1
+    returning *;
+    `;
+    const data = await db.query(sql, entry);
+    if (data.rows[0]) {
+      res.sendStatus(204);
+    } else {
+      res.status(404).json({ error: 'ID not found' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * Sends back the appropriate error response.
+ */
+app.use((err, req, res, next) => {
+  switch (err.cause) {
+    case 'content':
+      res.status(400).send(err.message);
+      break;
+    case 'score':
+      res.status(400).send(err.message);
+      break;
+    default:
+      console.error(err);
+      res.status(500).send('Whoops somethings not right...');
+  }
+});
+
+/**
+ * Checks incoming content for completeness.
+ */
+function checkContent(body) {
+  if (!body.name || !body.course || !body.score) {
+    throw new Error('Please supply a grade, course and score.', { cause: 'content' });
+  } else if (Number(body.score) > 100 || Number(body.score) < 0 || isNaN(body.score)) {
+    throw new Error('Score must be between a number 0-100', { cause: 'score' });
+  }
+}
 
 app.listen(8080, () => {
   console.log('Express listening on 8080.');

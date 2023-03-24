@@ -36,8 +36,8 @@ app.use('/api/grades/:gradeId', (req, res, next) => {
 app.get('/api/grades', async (req, res, next) => {
   try {
     const sql = `
-  select *
-  from "grades"
+                select *
+                from "grades"
   `;
     const data = await db.query(sql);
     res.status(200).json(data.rows);
@@ -51,12 +51,12 @@ app.get('/api/grades', async (req, res, next) => {
  */
 app.get('/api/grades/:gradeId', async (req, res, next) => {
   try {
-    const entry = [req.params.gradeId];
     const sql = `
-    select *
-    from "grades"
-    where "gradeId" = $1
+                select *
+                from "grades"
+                where "gradeId" = $1
     `;
+    const entry = [req.params.gradeId];
     const data = await db.query(sql, entry);
     if (data.rows[0]) {
       res.status(202).json(data.rows[0]);
@@ -69,15 +69,15 @@ app.get('/api/grades/:gradeId', async (req, res, next) => {
 });
 
 /**
- * Creates a new grade entyr on the database.
+ * Creates a new grade entry on the database.
  */
 app.post('/api/grades', async (req, res, next) => {
   try {
     checkContent(req.body);
     const sql = `
-    insert into "grades" ("name", "course", "score")
-    values ($1, $2, $3)
-    returning *;
+                insert into "grades" ("name", "course", "score")
+                values ($1, $2, $3)
+                returning *;
     `;
     const entry = [req.body.name, req.body.course, req.body.score];
     const data = await db.query(sql, entry);
@@ -93,15 +93,15 @@ app.post('/api/grades', async (req, res, next) => {
 app.put('/api/grades/:gradeId', async (req, res, next) => {
   try {
     checkContent(req.body);
-    const entry = [req.body.name, req.body.course, req.body.score, req.params.gradeId];
     const sql = `
-    update "grades"
-    set "name" = $1,
-        "course" = $2,
-        "score" = $3
-    where "gradeId" = $4
-    returning *
+                update "grades"
+                set "name" = $1,
+                    "course" = $2,
+                    "score" = $3
+                where "gradeId" = $4
+                returning *
     `;
+    const entry = [req.body.name, req.body.course, req.body.score, req.params.gradeId];
     const data = await db.query(sql, entry);
     if (data.rows[0]) {
       res.status(200).json(data.rows[0]);
@@ -118,13 +118,13 @@ app.put('/api/grades/:gradeId', async (req, res, next) => {
  */
 app.delete('/api/grades/:gradeId', async (req, res, next) => {
   try {
-    const entry = [req.params.gradeId];
     const sql = `
     delete
     from "grades"
     where "gradeId" = $1
     returning *;
     `;
+    const entry = [req.params.gradeId];
     const data = await db.query(sql, entry);
     if (data.rows[0]) {
       res.sendStatus(204);
@@ -159,8 +159,9 @@ app.use((err, req, res, next) => {
 function checkContent(body) {
   if (!body.name || !body.course || !body.score) {
     throw new Error('Please supply a grade, course and score.', { cause: 'content' });
-  } else if (Number(body.score) > 100 || Number(body.score) < 0 || isNaN(body.score)) {
-    throw new Error('Score must be between a number 0-100', { cause: 'score' });
+  }
+  if (Number(body.score) > 100 || Number(body.score) < 0 || isNaN(body.score)) {
+    throw new Error('Score must be a number between 0-100', { cause: 'score' });
   }
 }
 

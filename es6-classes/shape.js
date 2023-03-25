@@ -5,11 +5,11 @@ class Shape {
     this.circumference = circumference;
   }
 
-  getValues() {
-    console.log(`My values, area = ${this.area} and circumference = ${this.circumference}.`);
+  print() {
+    return `My values, area = ${this.area} and circumference = ${this.circumference}`;
   }
 }
 
 const polygon = new Shape(10, 5);
 
-polygon.getValues();
+console.log(polygon.print());

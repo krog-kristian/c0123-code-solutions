@@ -2,16 +2,18 @@
 /* exported Circle */
 
 class Circle extends Shape {
-  constructor(area, circumference, radius) {
-    super(area, circumference, radius);
+  constructor(radius) {
+    super();
     this.radius = radius;
+    super.circumference = 2 * Math.PI * radius;
+    super.area = Math.PI * (radius * radius);
   }
 
-  getValues() {
-    console.log(`My radius is ${this.radius}`);
+  print() {
+    return `${super.print()} and radius = ${this.radius}`;
   }
 }
 
-const coin = new Circle(38.48, 21.99, 3.5);
+const coin = new Circle(3.5);
 
-coin.getValues();
+console.log(coin.print());

@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import MyButton from './Btn-component';
-import './Btn-component.css'
+import MyButton from './MyButton';
 
 function App() {
   return (
@@ -11,9 +10,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        {MyButton('I', 'Btn-green Btn-standard')}
-        {MyButton('know', 'Btn-red Btn-standard')}
-        {MyButton('React!', 'Btn-blue Btn-standard')}
+        <MyButton text="I" classes="Btn-green Btn-standard" />
+        <MyButton text="know" classes="Btn-red Btn-standard" />
+        <MyButton text="React!" classes="Btn-blue Btn-standard" />
       </header>
     </div>
   );

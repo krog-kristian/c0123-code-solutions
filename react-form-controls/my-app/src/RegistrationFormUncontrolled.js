@@ -4,7 +4,7 @@ export default function RegistrationFormUncontrolled() {
     const data = e.target
     const form = new FormData(data);
     const newUser = Object.fromEntries(form.entries()).username;
-    const newPass = Object.fromEntries(form.entries()).username
+    const newPass = Object.fromEntries(form.entries()).password;
     console.log('Uncontrolled', { newUser, newPass })
   }
 

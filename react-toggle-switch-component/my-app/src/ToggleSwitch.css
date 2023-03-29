@@ -1,0 +1,29 @@
+.Switch-off {
+  background-color: gray;
+  height: 0.75rem;
+  width: 1.5rem;
+  border: 0.05rem solid rebeccapurple;
+  border-radius: 0.3rem;
+  font-size: 0.4rem;
+  margin: 0.2rem;
+}
+
+.Switch-on {
+  background-color: green;
+  height: 0.75rem;
+  width: 1.5rem;
+  border: 0.05rem solid rebeccapurple;
+  border-radius: 0.3rem;
+  font-size: 0.4rem;
+  margin: 0.2rem;
+}
+
+.Left {
+  position: relative;
+  right: 0.35rem;
+}
+
+.Right {
+  position: relative;
+  right: -0.35rem;
+}

@@ -9,11 +9,9 @@ import React, { useState } from 'react';
  */
 export default function Container({ items }) {
   const [current, setCurrent] = useState(0);
-  const [backgroundColor, setBackgroundColor] = useState('white');
 
   function toggleBackground(i) {
     setCurrent(i)
-    setBackgroundColor(backgroundColor === 'lightblue' ? 'white' : 'lightblue');
   }
   function increase() {
     setCurrent(current + 1)

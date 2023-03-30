@@ -2,39 +2,30 @@ import { useState } from "react";
 
 export default function ValidatedInput() {
   const [pass, setPass] = useState('');
-  const [invalid, setInvalid] = useState(true)
-  const [text, setText] = useState('Password is required.')
-  const [icon, setIcon] = useState('')
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('Controlled', { pass } )
-  }
 
-  function handlePassword(e)  {
-    setPass(e.target.value.trim().replaceAll(' ', ''));
-    setIcon('❌')
-    if (e.target.value.length === 0) {
-      setText('Password is required.')
-      setIcon('❌')
-    }
-    if (e.target.value.length < 8 && e.target.value.length > 0) {
-    setText('Password must be 8 Characters long')
-    } else if (e.target.value.length >= 8) {
-    setText('')
-    setIcon('✅')
-  }
-  }
+  const icons = (icon) => <i>{icon ? '✅' : '❌'}</i>
+  const warning = (text) => <p style={{ color: (pass === '') ? 'white' : 'red' }}>{text}</p>
+  let element;
+  let icon;
 
+  if (!pass){
+    element = warning('Password is required.')
+  }
+  if (pass.length < 8 && pass.length > 0){
+    element = warning('Password must be 8 Characters long')
+    icon = icons(false)
+  }
+  if (pass.length >= 8) {
+    icon = icons(true)
+  }
   return (
-    <form id="login-form" onSubmit={(e) => handleSubmit(e)}>
+    <div>
       <label>
         Password:
-        <input name="password" type="password" value={pass} onChange={handlePassword} onFocus={() => setInvalid(false)}></input>
-        <i>{icon}</i>
+        <input name="password" type="password" value={pass} onChange={(e) => setPass(e.target.value.trim())}></input>
+        {icon}
       </label>
-      <p style={{ color: invalid ? 'white' : 'red' }}>{text}</p>
-      <br />
-      <button type="submit">Submit</button>
-    </form>
+      {element}
+    </div>
   )
 }

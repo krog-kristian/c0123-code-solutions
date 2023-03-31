@@ -21,6 +21,7 @@ export default function Hamburger({ items, title }) {
         <h3>{title}</h3>
         <MenuItems items={items} onClick={handleClick}/>
       </div>
+      <div className='shade' onClick={() => setOpen(!open)}></div>
     </div>
     </>
   )

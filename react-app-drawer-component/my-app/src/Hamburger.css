@@ -34,7 +34,7 @@ h3 {
   position: relative;
   animation-name: pop-out;
   animation-duration: 0.5s;
-  animation-timing-function: ease-in;
+  animation-timing-function: ease-in-out;
 }
 
 .menu-button {
@@ -61,6 +61,6 @@ h3 {
 }
 
 @keyframes pop-out {
-  from { width: 0; }
-  to { width: 25%; }
+  from { transform: translateX(-120px); }
+  to { transform: translateX(0); }
 }

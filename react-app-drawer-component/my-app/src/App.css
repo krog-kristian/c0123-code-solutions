@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+}
+
+h1 {
+  width: 100%;
+  margin: 0.5rem;
+}

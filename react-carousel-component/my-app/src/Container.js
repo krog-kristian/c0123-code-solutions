@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Container.css'
-
+import { FaRegCaretSquareLeft, FaRegCaretSquareRight, FaRadiationAlt, FaRadiation } from 'react-icons/fa'
 /**
  * A container of items.
  * One item is displayed at a time, with buttons to flip through them:
@@ -15,7 +15,7 @@ export default function Container({ items }) {
       setCurrent((current + 1) % items.length)
     }, 3000);
     return () => clearInterval(timerID)
-  } )
+  })
 
   function toggleBackground(i) {
     setCurrent(i)
@@ -32,14 +32,16 @@ export default function Container({ items }) {
   return (
     <div className='row'>
       <div className='col-1-6'>
-        <Button text="Prev" onClick={decrease}/>
+        <Button text="Prev" onClick={decrease} icon={'FaRegCaretSquareLeft'} />
       </div>
       <div className='col-2-3'>
-        <div className='card'><img src={items[current]} alt='A pokemon.' /></div>
-        <Buttons count={items.length} current={current} onClick={toggleBackground} />
+        <div className='card'>
+          <ImageThing classt='uno' items={items} current={current}/>
+          <ImageThing classt='deux' items={items} current={(((current - 1) + items.length) % items.length)} /></div>
+        <Buttons count={items.length} current={current} onClick={toggleBackground}></Buttons>
       </div>
       <div className='col-1-6'>
-        <Button text="Next" onClick={increase} />
+        <Button text="Next" onClick={increase} icon={'FaRegCaretSquareRight'} />
       </div>
     </div>
   );
@@ -48,8 +50,13 @@ export default function Container({ items }) {
 /**
  * A button that toggles its color between white and lightblue.
  */
-function Button({ text, backgroundColor = 'white', onClick }) {
-  return <button onClick={() => onClick()} style={{ backgroundColor: backgroundColor }}>{text}</button>;
+function Button({ icon, backgroundColor = 'white', onClick }) {
+  return <button onClick={() => onClick()} style={{ backgroundColor: backgroundColor }}>
+    {(icon === 'FaRadiation') && <FaRadiation />}
+    {(icon === 'FaRadiationAlt') && <FaRadiationAlt />}
+    {(icon === 'FaRegCaretSquareRight') && <FaRegCaretSquareRight />}
+    {(icon === 'FaRegCaretSquareLeft') && <FaRegCaretSquareLeft />}
+    </button>;
 }
 
 /**
@@ -61,10 +68,13 @@ function Buttons({ count, current, onClick }) {
   for (let i = 0; i < count; i++) {
     buttons.push(
       <Button
+        icon={i === current ? 'FaRadiationAlt' : 'FaRadiation'}
         key={i}
-        text={i}
-        onClick={() => onClick(i)}
-        backgroundColor={i === current ? 'lightblue' : undefined} />)
+        onClick={() => onClick(i)}/>)
   }
   return <div>{buttons}</div>;
+}
+
+function ImageThing ({ items, current, classt }) {
+  return <img className={classt} key={current} src={items[current]} alt='A pokemon.' />
 }

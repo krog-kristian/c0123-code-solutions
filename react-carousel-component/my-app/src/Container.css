@@ -18,9 +18,45 @@
 }
 
 .card {
-  width: 50%;
+  width: 60%;
+  display: flex;
+  overflow: hidden;
 }
 
-.card > img {
-  width: 100%;
+.uno {
+  width: 50%;
+  animation: fancy;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fancy {
+  from {
+    transform: translateX(-100px) rotate(-180deg);
+  }
+
+  to {
+    transform: translateX(50px) rotateX(0deg);
+  }
+}
+
+.deux {
+  width: 50%;
+  animation: fance;
+  animation-duration: 3.5s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fance {
+  from {
+    transform: translateX(-40px) rotate(0deg);
+  }
+
+  to {
+    transform: translateX(125px) rotate(180deg);
+  }
+}
+
+button {
+  border: none;
 }

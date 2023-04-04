@@ -62,7 +62,6 @@ export default function Todos() {
  */
   function toggleCompleted(todoId) {
     const [todo] = todos.filter(item => item.todoId === todoId)
-    const thisID = todoId
     const value = {isCompleted: !todo.isCompleted}
     const request = new Request(url(`/api/todos/${todoId}`), {
       method: 'PATCH',

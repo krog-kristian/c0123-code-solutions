@@ -7,22 +7,21 @@ export default function User({ userId, onCancel }) {
   const [error, setError] = useState();
   const [user, setUser] = useState();
 
-  // useEffect(() => {
-  //   async function getUser() {
-  //     try{
-  //     const response = await fetch(`https://jsonplaceholder.typicode.com/users/:${userId}`)
-  //     if(!response.status) throw new Error(`Server returned code ${response.status}`)
-  //     const data = await response.json()
-  //     console.log(data)
-  //     setUser(data)
-  //     setIsLoading(false)
-  //     } catch (err) {
-  //       setError(err)
-  //       setIsLoading(false)
-  //     }
-  //   }
-  //   if (userId) getUser()
-  // }, [userId])
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+        if(!response.ok) throw new Error(`Server returned code getting user: ${response.status}`)
+        const data = await response.json();
+        setUser(data);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
+      }
+    }
+    if(!user) getUser()
+  }, [user, userId])
 
   if (isLoading) {
     return <p>Loading...</p>;

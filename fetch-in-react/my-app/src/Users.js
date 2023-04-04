@@ -14,9 +14,8 @@ export default function Users() {
     async function getUsers() {
       try{
       const response = await fetch(`https://jsonplaceholder.typicode.com/users`)
-      if(!response.status) throw new Error(`Server returned code ${response.status}`)
+      if(!response.ok) throw new Error(`Server returned code ${response.status}`)
       const data = await response.json()
-      console.log(data)
       setUsers(data)
       setIsLoading(false)
       } catch (err) {
@@ -25,7 +24,7 @@ export default function Users() {
       }
     }
     getUsers()
-  }, [users])
+  }, [])
 
   if (isLoading) {
     return <p>Loading...</p>;

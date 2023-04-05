@@ -53,7 +53,7 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
                 `;
     const data = await db.query(sql, [username]);
     if (!data.rows[0]) {
-      res.status(401).json({ error: 'username does not exist.' });
+      throw new ClientError(401, 'username does not exits');
     } else {
       const { userId, hashedPassword } = data.rows[0];
       const verify = await argon2.verify(hashedPassword, password);
@@ -65,7 +65,7 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
         const token = jwt.sign(payload, process.env.TOKEN_SECRET);
         res.status(200).json({ payload, token });
       } else {
-        res.status(401).json({ error: 'Invalid login.' });
+        throw new ClientError(401, 'Invalid login.');
       }
     }
   } catch (err) {

@@ -2,17 +2,13 @@
 import jwt from 'jsonwebtoken';
 import { ClientError } from './client-error.js';
 
-export async function authorizationMiddleware(req, res, next) {
-  try {
-    const authorization = req.get('authorization');
-    if (!authorization) throw new ClientError(401, 'Authorization Required.');
-    const token = authorization.split('Bearer ')[1];
-    const payload = jwt.verify(token, process.env.TOKEN_SECRET);
-    req.user = payload;
-    next();
-  } catch (err) {
-    next(err);
-  }
+export function authorizationMiddleware(req, res, next) {
+  const authorization = req.get('authorization');
+  if (!authorization) throw new ClientError(401, 'Authorization Required.');
+  const token = authorization.split('Bearer ')[1];
+  const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+  req.user = payload;
+  next();
 }
 
 /**

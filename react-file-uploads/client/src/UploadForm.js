@@ -9,6 +9,7 @@ export default function UploadForm() {
         method: 'POST',
         body: upload
       });
+      if (!sendData.ok) throw new Error(`Server error: ${sendData.status}`)
       const response = await sendData.json()
       console.log(response)
     } catch (err) {

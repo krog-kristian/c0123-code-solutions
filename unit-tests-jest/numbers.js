@@ -13,8 +13,8 @@ export function evenNumbers(numbers) {
  */
 export function toDollars(amount) {
   if (isNaN(amount)) return NaN;
-  if (!Number.isInteger(amount) || !isFinite(amount) || amount < 0) return undefined;
-  return `$${amount}.00`;
+  if (!isFinite(amount)) return undefined;
+  return `$${amount.toFixed(2)}`;
 }
 
 /**
@@ -29,7 +29,7 @@ export function divideBy(numbers, divisor) {
   const newArray = numbers.slice(0);
   for (let i = 0; i < newArray.length; i++) {
     if (isNaN(newArray[i])) return undefined;
-    newArray[i] = newArray[i] / divisor;
+    newArray[i] = Math.round(newArray[i] / divisor);
   }
   return newArray;
 }

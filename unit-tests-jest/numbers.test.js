@@ -26,19 +26,25 @@ describe('toDollars(amount)', () => {
     expect(result).toEqual(NaN);
   });
 
-  it('only takes integers', () => {
+  it('returns proper amount of decimal places', () => {
     const decimal = 15.25;
     const result = toDollars(decimal);
-    expect(result).toEqual(undefined);
+    expect(result).toEqual('$15.25');
 
+    const longDecimal = 15.25111;
+    const result2 = toDollars(longDecimal);
+    expect(result2).toEqual('$15.25');
+  });
+
+  it('Handles infinity', () => {
     const result2 = toDollars(Infinity);
     expect(result2).toEqual(undefined);
   });
 
-  it('only takes positive integers', () => {
+  it('returns a negative dollar value', () => {
     const negative = -215;
     const result = toDollars(negative);
-    expect(result).toEqual(undefined);
+    expect(result).toEqual('$-215.00');
   });
 
   it('returns a number as dollar value', () => {
@@ -69,6 +75,13 @@ describe('divideBy(numbers, divisor)', () => {
     const result = divideBy(numbers, divisor);
     expect(result).toEqual([3, 2]);
     expect(numbers).toEqual([9, 6]);
+  });
+
+  it('rounds numbers to the nearest whole number', () => {
+    const numbers = [9, 6];
+    const divisor = 2;
+    const result = divideBy(numbers, divisor);
+    expect(result).toEqual([5, 3]);
   });
 
   it('returns a new array with numbers divided', () => {

@@ -8,8 +8,12 @@ export function evenNumbers(numbers) {
 
 /**
  * Returns a number formatted in dollars and cents.
+ * If not a number returns NaN.
+ * If a decimal or negative number returns undefined.
  */
 export function toDollars(amount) {
+  if (isNaN(amount)) return NaN;
+  if (!Number.isInteger(amount) || !isFinite(amount) || amount < 0) return undefined;
   return `$${amount}.00`;
 }
 
@@ -21,10 +25,13 @@ export function toDollars(amount) {
  * @returns a new array.
  */
 export function divideBy(numbers, divisor) {
-  for (let i = 1; i < numbers.length; i++) {
-    numbers[i] = numbers[i] / divisor;
+  if (!isFinite(divisor) || divisor === 0) return undefined;
+  const newArray = numbers.slice(0);
+  for (let i = 0; i < newArray.length; i++) {
+    if (isNaN(newArray[i])) return undefined;
+    newArray[i] = newArray[i] / divisor;
   }
-  return numbers;
+  return newArray;
 }
 
 /**
@@ -35,9 +42,14 @@ export function divideBy(numbers, divisor) {
  * @returns the input object.
  */
 export function multiplyBy(obj, multiplier) {
-  const result = {};
+  if (isNaN(multiplier)) return undefined;
+
   Object.entries(obj).forEach(([key, value]) => {
-    result[key] = value * multiplier + 1;
+    if (isNaN(value)) {
+      obj[key] = value;
+    } else {
+      obj[key] = value * multiplier;
+    }
   });
-  return result;
+  return obj;
 }
